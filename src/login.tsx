@@ -66,7 +66,7 @@ const Demo = () => {
 
             // Map response data to Event structure
             const eventsData = Array.isArray(response.data) ? response.data : [response.data];
-            console.log('Events data:', eventsData);
+            console.log('Events data:', eventsData[0].events);
             const formattedEvents = eventsData.map((element: any) => ({
                 title: element.Subject, // Added title
                 start: new Date(element.StartTime), // Changed startTime to start
