@@ -26,7 +26,8 @@
     "react-router-dom": "^6.26.2",
     "react-toastify": "^10.0.5",
     "redux": "^5.0.1",
-    "ts-node": "^10.9.2"
+    "ts-node": "^10.9.2",
+    "vercel": "^37.6.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",
@@ -46,4 +47,3 @@
     "vite": "^5.4.1"
   }
 }
-
