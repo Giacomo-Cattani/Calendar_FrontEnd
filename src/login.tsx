@@ -46,10 +46,12 @@ const Demo = () => {
             const response = await axios.post(
                 `${import.meta.env.VITE_URL}/login`,
                 {
-                    user: email,
-                    pwd: hashedPassword, // Ensure secure handling on the server side
-                    fromDate: '01/09/2024',
-                    toDate: '01/09/2025',
+                    "data": {
+                        user: email,
+                        pwd: hashedPassword, // Ensure secure handling on the server side
+                        fromDate: '01/09/2024',
+                        toDate: '01/09/2025',
+                    }
                 },
                 {
                     headers: { 'Access-Control-Allow-Origin': '*' },
