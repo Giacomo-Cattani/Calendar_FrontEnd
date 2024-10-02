@@ -2,7 +2,7 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Demo from './login'; // Your login component
 import App from './App'; // Protected component
-import PrivateRoute from './PrivateRoute';
+import PrivateRoute from './privateRoute';
 
 const AppRouter = () => {
     return (
