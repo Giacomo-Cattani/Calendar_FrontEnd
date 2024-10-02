@@ -24,9 +24,6 @@ const Demo = () => {
         const email = emailInput.value.trim();
         const password = passwordInput.value.trim();
 
-        console.log('Email:', email);
-        console.log('Password:', password);
-
         if (!email) {
             toast.error('Email is required');
             return;
@@ -45,6 +42,8 @@ const Demo = () => {
 
         const hashedPassword = md5(password);
 
+        console.log('Logging in with email:', email, 'and password  hash:', hashedPassword);
+
         try {
             const response = await axios.post(
                 `${import.meta.env.VITE_URL}/login`,
@@ -58,6 +57,7 @@ const Demo = () => {
                     headers: { 'Access-Control-Allow-Origin': '*' },
                 }
             );
+            console.log(response);
 
             // Since the response doesn't contain user info or token,
             // we'll consider the login successful if the request succeeds
