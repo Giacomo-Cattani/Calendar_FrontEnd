@@ -1,7 +1,5 @@
 // src/Demo.tsx
-import React from 'react';
-import LoginPage, { Reset, Logo, Email, Banner, ButtonAfter, Password, Input, Submit } from '@react-login-page/page3';
-import LoginLogo from 'react-login-page/logo-rect';
+import LoginPage, { Email, Banner, ButtonAfter, Password, Submit } from '@react-login-page/page3';
 import defaultBannerImage from '@react-login-page/page3/bg.jpeg';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
