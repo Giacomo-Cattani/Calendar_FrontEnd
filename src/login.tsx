@@ -44,7 +44,7 @@ const Demo = () => {
 
         try {
             const response = await axios.post(
-                `${import.meta.env.VITE_URL}/login`,
+                `${process.env.VITE_URL}/login`,
                 {
                     user: email,
                     pwd: hashedPassword, // Ensure secure handling on the server side
