@@ -40,7 +40,6 @@ const Demo = () => {
 
         const hashedPassword = md5(password);
 
-        console.log('Logging in with email:', email, 'and password  hash:', hashedPassword);
 
         try {
             const response = await axios.post(
@@ -57,7 +56,6 @@ const Demo = () => {
                     headers: { 'Access-Control-Allow-Origin': '*' },
                 }
             );
-            console.log(response);
 
             // Since the response doesn't contain user info or token,
             // we'll consider the login successful if the request succeeds
@@ -66,7 +64,6 @@ const Demo = () => {
 
             // Map response data to Event structure
             const eventsData = Array.isArray(response.data) ? response.data : [response.data];
-            console.log('Events data:', eventsData[0].events);
             const formattedEvents = eventsData[0].events.map((element: any) => ({
                 title: element.Subject, // Added title
                 start: new Date(element.StartTime), // Changed startTime to start
