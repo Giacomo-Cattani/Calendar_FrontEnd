@@ -12,6 +12,7 @@
   "dependencies": {
     "@react-login-page/page3": "^1.0.4",
     "@reduxjs/toolkit": "^2.2.7",
+    "@types/react-modal": "^3.16.3",
     "axios": "^1.7.7",
     "date-fns": "^4.1.0",
     "dotenv": "^16.4.5",
