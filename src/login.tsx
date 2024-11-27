@@ -82,8 +82,8 @@ const Demo = () => {
             // Dispatch events to the Redux store
             dispatch(setEvents(formattedEvents));
             // Save email and hashed password in session storage
-            sessionStorage.setItem('email', email);
-            sessionStorage.setItem('hashedPassword', hashedPassword);
+            localStorage.setItem('email', email);
+            localStorage.setItem('hashedPassword', hashedPassword);
 
             toast.success('Login successful');
 

@@ -1,6 +1,7 @@
-import { FC, useEffect } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { Calendar, momentLocalizer } from 'react-big-calendar'
 import moment from 'moment'
+import Modal from 'react-modal'
 
 import 'react-big-calendar/lib/addons/dragAndDrop/styles.css'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
@@ -14,18 +15,36 @@ import axios from 'axios'
 
 moment.locale('en-GB')
 
+const customStyles = {
+  content: {
+    zIndex: 1000,
+  },
+  overlay: {
+    zIndex: 1000,
+  },
+};
+
+const formatDate = (date: Date) => {
+  return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+};
+
+const cleanSubject = (subject: string) => {
+  return subject.replace(/\(BSD23 2°\)\s*/, '');
+};
+
 const App: FC = () => {
 
   const events = useSelector((state: RootState) => state.events.events);
 
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
+  const [selectedEvent, setSelectedEvent] = useState<any>(null);
 
   useEffect(() => {
 
     // Save email and hashed password in session storage
-    const email = sessionStorage.getItem('email');
-    const hashedPassword = sessionStorage.getItem('hashedPassword');
+    const email = localStorage.getItem('email');
+    const hashedPassword = localStorage.getItem('hashedPassword');
 
     // Fetch events from the server or any other source
     const fetchEvents = async () => {
@@ -47,8 +66,9 @@ const App: FC = () => {
 
         // Map response data to Event structure
         const eventsData = Array.isArray(response.data) ? response.data : [response.data];
+        console.log(eventsData[0].events[0]);
         const formattedEvents = eventsData[0].events.map((element: any) => ({
-          title: element.Subject, // Added title
+          title: cleanSubject(element.Subject), // Cleaned title
           start: new Date(element.StartTime), // Changed startTime to start
           end: new Date(element.EndTime), // Changed endTime to end
           color: element.Colore,
@@ -79,12 +99,20 @@ const App: FC = () => {
     navigate('/login');
   };
 
+  const handleEventClick = (event: any) => {
+    setSelectedEvent(event);
+  };
+
+  const closeModal = () => {
+    setSelectedEvent(null);
+  };
+
   return (
     <>
       <button onClick={handleLogout}>Logout</button>
       <Calendar
         localizer={momentLocalizer(moment)}
-        defaultView='week'
+        defaultView={window.innerWidth < 768 ? 'day' : 'week'}
         min={new Date(0, 0, 0, 9, 0, 0)}
         max={new Date(0, 0, 0, 19, 0, 0)}
         events={events}
@@ -96,7 +124,24 @@ const App: FC = () => {
             localizer?.format(start, 'HH:mm', culture) + ' - ' + localizer?.format(end, 'HH:mm', culture),
         }}
         style={{ height: '90vh' }}
+        onSelectEvent={handleEventClick}
       />
+      {selectedEvent && (
+        <Modal
+          isOpen={!!selectedEvent}
+          onRequestClose={closeModal}
+          contentLabel="Event Details"
+          style={customStyles}
+        >
+          <button onClick={closeModal} style={{ float: 'right', fontSize: '1.5rem', border: 'none', background: 'none', cursor: 'pointer' }}>x</button>
+          <h2>{selectedEvent.title}</h2>
+          <p>Inizio: {formatDate(selectedEvent.start)}</p>
+          <p>Fine: {formatDate(selectedEvent.end)}</p>
+          <p>Modulo: {selectedEvent.module}</p>
+          <p>Classe: {selectedEvent.classroom}</p>
+          <p>Maestro: {selectedEvent.teacherFirstName} {selectedEvent.teacherLastName}</p>
+        </Modal>
+      )}
     </>
   )
 }
