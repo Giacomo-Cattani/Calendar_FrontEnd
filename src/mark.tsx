@@ -1,35 +1,63 @@
-import React from 'react';
-// const marks = [
-//     { id: 1, subject: 'Math', mark: 95 },
-//     { id: 2, subject: 'Science', mark: 88 },
-//     { id: 3, subject: 'History', mark: 76 },
-//     { id: 4, subject: 'English', mark: 89 },
-// ];
+import React from "react";
+import {
+    Tabs,
+    TabsHeader,
+    TabsBody,
+    Tab,
+    TabPanel,
+} from "@material-tailwind/react";
 
-
-const MarkPage: React.FC = () => {
-
+export function UnderlineTabs() {
+    const [activeTab, setActiveTab] = React.useState("1anno");
+    const data = [
+        {
+            label: "1° Anno",
+            value: "1anno",
+            desc: `It really matters and then like it really doesn't matter.
+      What matters is the people who are sparked by it. And the people 
+      who are like offended by it, it doesn't matter.`,
+        },
+        {
+            label: "2° Anno",
+            value: "2anno",
+            desc: `Because it's about motivating the doers. Because I'm here
+      to follow my dreams and inspire other people to follow their dreams, too.`,
+        },
+    ];
     return (
-        <div className="container mx-auto p-4">
-            <h1 className="text-7xl font-bold mb-4 text-center pt-52">WIP</h1>
-            {/* <table className="min-w-full bg-white">
-                <thead>
-                    <tr>
-                        <th className="py-2 px-4 border-b">Subject</th>
-                        <th className="py-2 px-4 border-b">Mark</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {marks.map((mark) => (
-                        <tr key={mark.id}>
-                            <td className="py-2 px-4 border-b">{mark.subject}</td>
-                            <td className="py-2 px-4 border-b">{mark.mark}</td>
-                        </tr>
+        <div style={{ paddingTop: '1.5rem', marginRight: '1rem', marginLeft: '1rem' }}>
+            <Tabs value={activeTab}>
+                <TabsHeader
+                    className="bg-transparent"
+                    indicatorProps={{
+                        className: "bg-gray-900/15 shadow-none !text-gray-900",
+                    }}
+                >
+                    {data.map(({ label, value }) => (
+                        <Tab
+                            key={value}
+                            value={value}
+                            onClick={() => setActiveTab(value)}
+                            className={activeTab === value ? "text-gray-900" : ""}
+                        >
+                            {label}
+                        </Tab>
                     ))}
-                </tbody>
-            </table> */}
+                </TabsHeader>
+                <TabsBody
+                    animate={{
+                        initial: { y: 250 },
+                        mount: { y: 0 },
+                        unmount: { y: 250 },
+                    }}
+                >
+                    {data.map(({ value, desc }) => (
+                        <TabPanel key={value} value={value}>
+                            {desc}
+                        </TabPanel>
+                    ))}
+                </TabsBody>
+            </Tabs>
         </div>
     );
-};
-
-export default MarkPage;
+}
