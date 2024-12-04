@@ -7,10 +7,7 @@ import 'react-big-calendar/lib/addons/dragAndDrop/styles.css'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from './redux/store'
-import { useNavigate } from 'react-router-dom'
-import { logout } from './redux/authSlice'
-import { clearEvents, setEvents } from './redux/eventSlice'
-import { toast } from 'react-toastify'
+import { setEvents } from './redux/eventSlice'
 import axios from 'axios'
 
 moment.locale('en-GB')
@@ -37,7 +34,7 @@ const App: FC = () => {
   const events = useSelector((state: RootState) => state.events.events);
 
   const dispatch = useDispatch<AppDispatch>();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [selectedEvent, setSelectedEvent] = useState<any>(null);
 
   useEffect(() => {
@@ -92,12 +89,12 @@ const App: FC = () => {
     fetchEvents();
   }, [dispatch]);
 
-  const handleLogout = () => {
-    dispatch(logout());
-    dispatch(clearEvents());
-    toast.success('Logged out successfully');
-    navigate('/login');
-  };
+  // const handleLogout = () => {
+  //   dispatch(logout());
+  //   dispatch(clearEvents());
+  //   toast.success('Logged out successfully');
+  //   navigate('/login');
+  // };
 
   const handleEventClick = (event: any) => {
     setSelectedEvent(event);
@@ -109,7 +106,7 @@ const App: FC = () => {
 
   return (
     <>
-      <button onClick={handleLogout}>Logout</button>
+      {/* <button onClick={handleLogout}>Logout</button> */}
       <Calendar
         localizer={momentLocalizer(moment)}
         defaultView={window.innerWidth < 768 ? 'day' : 'week'}
@@ -123,7 +120,7 @@ const App: FC = () => {
           agendaTimeRangeFormat: ({ start, end }, culture, localizer) =>
             localizer?.format(start, 'HH:mm', culture) + ' - ' + localizer?.format(end, 'HH:mm', culture),
         }}
-        style={{ height: '90vh' }}
+        style={{ height: '90vh', paddingTop: '1rem' }}
         onSelectEvent={handleEventClick}
       />
       {selectedEvent && (

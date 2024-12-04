@@ -3,7 +3,7 @@ import AppRouter from './routes.tsx'
 
 import { Provider } from 'react-redux'
 import store from './redux/store.tsx'
-// import './index.css'
+import './index.css'
 
 
 

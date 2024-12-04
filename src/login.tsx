@@ -6,14 +6,23 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import md5 from 'md5';
-import { setEvents } from './redux/eventSlice';
-import { loginSuccess } from './redux/authSlice';
+import { setEvents, clearEvents } from './redux/eventSlice';
+import { loginSuccess, logout } from './redux/authSlice';
 import { AppDispatch } from './redux/store';
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const Demo = () => {
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
+
+    useEffect(() => {
+        // Clear events and auth state on login page load
+        dispatch(clearEvents());
+        dispatch(logout());
+        localStorage.removeItem('email');
+        localStorage.removeItem('hashedPassword');
+    });
 
     const login = async (): Promise<void> => {
         const emailInput = document.getElementById('email') as HTMLInputElement;
@@ -87,8 +96,8 @@ const Demo = () => {
 
             toast.success('Login successful');
 
-            // Navigate to the dashboard
-            navigate('/dashboard');
+            // Navigate to the calendar
+            navigate('/');
         } catch (error: any) {
             console.error('There was an error!', error);
             toast.error(error.response?.data?.message || 'Login failed');
@@ -136,6 +145,12 @@ const Demo = () => {
                         display: 'flex',
                         justifyContent: 'center',
                         alignItems: 'center',
+                    }}
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                            console.log('Space key pressed');
+                            login();
+                        }
                     }}
                 />
                 <section
