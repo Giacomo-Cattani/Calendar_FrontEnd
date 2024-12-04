@@ -166,17 +166,11 @@ export function NavbarDefault() {
                 <div className="container mx-auto">
                     {navList}
                     <div className="flex items-center gap-x-1">
-                        <Button fullWidth variant="text" size="sm" className=""
-                            placeholder=""
-                            onPointerEnterCapture={() => { }}
-                            onPointerLeaveCapture={() => { }}>
-                            <span>Log In</span>
-                        </Button>
                         <Button fullWidth variant="gradient" size="sm" className=""
                             placeholder=""
                             onPointerEnterCapture={() => { }}
                             onPointerLeaveCapture={() => { }}>
-                            <span>Sign in</span>
+                            <span>Logout</span>
                         </Button>
                     </div>
                 </div>
