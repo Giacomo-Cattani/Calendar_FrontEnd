@@ -1,11 +1,10 @@
 import React from 'react';
-
-const marks = [
-    { id: 1, subject: 'Math', mark: 95 },
-    { id: 2, subject: 'Science', mark: 88 },
-    { id: 3, subject: 'History', mark: 76 },
-    { id: 4, subject: 'English', mark: 89 },
-];
+// const marks = [
+//     { id: 1, subject: 'Math', mark: 95 },
+//     { id: 2, subject: 'Science', mark: 88 },
+//     { id: 3, subject: 'History', mark: 76 },
+//     { id: 4, subject: 'English', mark: 89 },
+// ];
 
 
 const MarkPage: React.FC = () => {
