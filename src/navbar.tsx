@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from './redux/store'
 import { clearEvents } from './redux/eventSlice'
+import { clearMarks } from "./redux/markSlice";
 import { logout } from './redux/authSlice'
 import { toast } from 'react-toastify'
 
@@ -28,6 +29,7 @@ export function NavbarDefault() {
 
     const handleLogout = () => {
         dispatch(logout());
+        dispatch(clearMarks());
         dispatch(clearEvents());
         toast.success('Logged out successfully');
         navigate('/login');

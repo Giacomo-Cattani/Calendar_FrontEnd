@@ -33,8 +33,8 @@ const App: FC = () => {
 
   const events = useSelector((state: RootState) => state.events.events);
 
+
   const dispatch = useDispatch<AppDispatch>();
-  // const navigate = useNavigate();
   const [selectedEvent, setSelectedEvent] = useState<any>(null);
 
   useEffect(() => {
@@ -91,13 +91,6 @@ const App: FC = () => {
 
     fetchEvents();
   }, [dispatch]);
-
-  // const handleLogout = () => {
-  //   dispatch(logout());
-  //   dispatch(clearEvents());
-  //   toast.success('Logged out successfully');
-  //   navigate('/login');
-  // };
 
   const handleEventClick = (event: any) => {
     setSelectedEvent(event);

@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import md5 from 'md5';
 import { setEvents, clearEvents } from './redux/eventSlice';
+import { setMarks, clearMarks } from './redux/markSlice';
 import { loginSuccess, logout } from './redux/authSlice';
 import { AppDispatch } from './redux/store';
 import { useNavigate } from 'react-router-dom';
@@ -19,6 +20,7 @@ const Demo = () => {
     useEffect(() => {
         // Clear events and auth state on login page load
         dispatch(clearEvents());
+        dispatch(clearMarks());
         dispatch(logout());
         localStorage.removeItem('email');
         localStorage.removeItem('hashedPassword');
@@ -91,7 +93,6 @@ const Demo = () => {
             // Map response data to Event structure
             const eventsData = Array.isArray(response.data) ? response.data : [response.data];
             const marksData = Array.isArray(response2.data) ? response2.data : [response2.data];
-            console.log(marksData);
             const formattedEvents = eventsData.flatMap((data: any) => data.events.map((element: any) => ({
                 title: cleanSubject(element.Subject), // Cleaned title
                 start: new Date(element.StartTime), // Changed startTime to start
@@ -106,15 +107,13 @@ const Demo = () => {
                 teacherFirstName: element.NomeDocente,
                 teacherLastName: element.CognomeDocente,
             })));
-
-
-
-
-
+            const formattedMark = marksData[0].marks;
 
             dispatch(setEvents([]));
+            dispatch(setMarks([]));
             // Dispatch events to the Redux store
             dispatch(setEvents(formattedEvents));
+            dispatch(setMarks(formattedMark));
             // Save email and hashed password in session storage
             localStorage.setItem('email', email);
             localStorage.setItem('hashedPassword', hashedPassword);
