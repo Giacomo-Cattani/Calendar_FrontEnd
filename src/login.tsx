@@ -70,6 +70,19 @@ const Demo = () => {
                 }
             );
 
+            const response2 = await axios.post(
+                `${import.meta.env.VITE_URL}/marks`,
+                {
+                    "data": {
+                        user: email,
+                        pwd: hashedPassword
+                    }
+                },
+                {
+                    headers: { 'Access-Control-Allow-Origin': '*' },
+                }
+            );
+
             // Since the response doesn't contain user info or token,
             // we'll consider the login successful if the request succeeds
             // and dispatch `loginSuccess` to update the auth state
@@ -77,6 +90,8 @@ const Demo = () => {
 
             // Map response data to Event structure
             const eventsData = Array.isArray(response.data) ? response.data : [response.data];
+            const marksData = Array.isArray(response2.data) ? response2.data : [response2.data];
+            console.log(marksData);
             const formattedEvents = eventsData.flatMap((data: any) => data.events.map((element: any) => ({
                 title: cleanSubject(element.Subject), // Cleaned title
                 start: new Date(element.StartTime), // Changed startTime to start
@@ -91,6 +106,11 @@ const Demo = () => {
                 teacherFirstName: element.NomeDocente,
                 teacherLastName: element.CognomeDocente,
             })));
+
+
+
+
+
 
             dispatch(setEvents([]));
             // Dispatch events to the Redux store

@@ -32,6 +32,9 @@ export function UnderlineTabs() {
                     indicatorProps={{
                         className: "bg-gray-900/15 shadow-none !text-gray-900",
                     }}
+                    placeholder=""
+                    onPointerEnterCapture={() => { }}
+                    onPointerLeaveCapture={() => { }}
                 >
                     {data.map(({ label, value }) => (
                         <Tab
@@ -39,6 +42,9 @@ export function UnderlineTabs() {
                             value={value}
                             onClick={() => setActiveTab(value)}
                             className={activeTab === value ? "text-gray-900" : ""}
+                            placeholder=""
+                            onPointerEnterCapture={() => { }}
+                            onPointerLeaveCapture={() => { }}
                         >
                             {label}
                         </Tab>
@@ -50,6 +56,9 @@ export function UnderlineTabs() {
                         mount: { y: 0 },
                         unmount: { y: 250 },
                     }}
+                    placeholder=""
+                    onPointerEnterCapture={() => { }}
+                    onPointerLeaveCapture={() => { }}
                 >
                     {data.map(({ value, desc }) => (
                         <TabPanel key={value} value={value}>
