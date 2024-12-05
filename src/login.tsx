@@ -24,6 +24,10 @@ const Demo = () => {
         localStorage.removeItem('hashedPassword');
     });
 
+    const cleanSubject = (subject: string) => {
+        return subject.replace(/\(BSD23 2°\)\s*/, '');
+    };
+
     const login = async (): Promise<void> => {
         const emailInput = document.getElementById('email') as HTMLInputElement;
         const passwordInput = document.getElementById('psw') as HTMLInputElement;
@@ -73,8 +77,8 @@ const Demo = () => {
 
             // Map response data to Event structure
             const eventsData = Array.isArray(response.data) ? response.data : [response.data];
-            const formattedEvents = eventsData[0].events.map((element: any) => ({
-                title: element.Subject, // Added title
+            const formattedEvents = eventsData.flatMap((data: any) => data.events.map((element: any) => ({
+                title: cleanSubject(element.Subject), // Cleaned title
                 start: new Date(element.StartTime), // Changed startTime to start
                 end: new Date(element.EndTime), // Changed endTime to end
                 color: element.Colore,
@@ -86,8 +90,9 @@ const Demo = () => {
                 classroom: element.Aula,
                 teacherFirstName: element.NomeDocente,
                 teacherLastName: element.CognomeDocente,
-            }));
+            })));
 
+            dispatch(setEvents([]));
             // Dispatch events to the Redux store
             dispatch(setEvents(formattedEvents));
             // Save email and hashed password in session storage
