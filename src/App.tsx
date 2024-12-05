@@ -62,8 +62,7 @@ const App: FC = () => {
         );
 
         // Map response data to Event structure
-        const eventsData = Array.isArray(response.data) ? response.data : [response.data];
-        console.log(eventsData[0].events[0]);
+        const eventsData = Array.isArray(response.data) ? response.data : [response.data];w
         const formattedEvents = eventsData[0].events.map((element: any) => ({
           title: cleanSubject(element.Subject), // Cleaned title
           start: new Date(element.StartTime), // Changed startTime to start

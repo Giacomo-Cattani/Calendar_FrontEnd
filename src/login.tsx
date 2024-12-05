@@ -148,7 +148,6 @@ const Demo = () => {
                     }}
                     onKeyDown={(e) => {
                         if (e.key === 'Enter') {
-                            console.log('Space key pressed');
                             login();
                         }
                     }}
