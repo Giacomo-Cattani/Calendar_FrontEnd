@@ -2,11 +2,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from './authSlice';
 import eventReducer from './eventSlice';
+import markReducer from './markSlice';
 
 const store = configureStore({
     reducer: {
         auth: authReducer,
         events: eventReducer,
+        marks: markReducer,
     },
 });
 

@@ -31,6 +31,6 @@ const eventSlice = createSlice({
     },
 });
 
-export const { setEvents, addEvent, clearEvents } = eventSlice.actions;
+export const { setEvents, addEvent, clearEvents } = eventSlice.actions; // Export setMarks
 
 export default eventSlice.reducer;

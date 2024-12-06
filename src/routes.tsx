@@ -3,8 +3,8 @@ import { BrowserRouter as Router, Routes, Route, Navigate, Outlet } from 'react-
 import Demo from './login'; // Your login component
 import App from './App'; // Protected component
 import PrivateRoute from './privateRoute';
-import NotFound from './notfound';
-import MarkPage from './mark';
+import ErrorSection7 from './notfound';
+import { UnderlineTabs } from './mark';
 import { NavbarDefault } from './navbar'
 
 const NavbarLayout = () => (
@@ -32,11 +32,11 @@ const AppRouter = () => {
                     {/* Nested routes will be rendered inside the <Outlet> */}
                     <Route index element={<Navigate to="/calendar" replace />} />
                     <Route path="calendar" element={<App />} />
-                    <Route path="mark" element={<MarkPage />} />
+                    <Route path="mark" element={<UnderlineTabs />} />
                 </Route>
 
                 {/* Redirect any unknown routes to login */}
-                <Route path="*" element={<NotFound />} />
+                <Route path="*" element={<ErrorSection7 />} />
             </Routes>
         </Router>
     );
