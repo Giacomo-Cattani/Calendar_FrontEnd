@@ -28,6 +28,7 @@ export function NavbarDefault() {
     const dispatch = useDispatch<AppDispatch>();
 
     const handleLogout = () => {
+        
         dispatch(logout());
         dispatch(clearMarks());
         dispatch(clearEvents());
@@ -170,6 +171,7 @@ export function NavbarDefault() {
                     <div className="flex items-center gap-x-1">
                         <Button fullWidth variant="gradient" size="sm" className=""
                             placeholder=""
+                            onClick={handleLogout}
                             onPointerEnterCapture={() => { }}
                             onPointerLeaveCapture={() => { }}>
                             <span>Logout</span>

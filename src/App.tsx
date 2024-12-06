@@ -26,7 +26,7 @@ const formatDate = (date: Date) => {
 };
 
 const cleanSubject = (subject: string) => {
-  return subject.replace(/\(BSD23 2°\)\s*/, '');
+  return subject.replace(/\(.*?\)\s*/, '');
 };
 
 const App: FC = () => {
@@ -52,8 +52,8 @@ const App: FC = () => {
             "data": {
               user: email,
               pwd: hashedPassword, // Ensure secure handling on the server side
-              fromDate: '01/09/2024',
-              toDate: '01/09/2025',
+              fromDate: new Date(new Date().setFullYear(new Date().getFullYear() - 1)).toLocaleDateString('it-IT'),
+              toDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toLocaleDateString('it-IT'),
             }
           },
           {

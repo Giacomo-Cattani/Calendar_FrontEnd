@@ -18,16 +18,23 @@ const Demo = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        // Clear events and auth state on login page load
-        dispatch(clearEvents());
-        dispatch(clearMarks());
-        dispatch(logout());
-        localStorage.removeItem('email');
-        localStorage.removeItem('hashedPassword');
-    });
+
+        // Check if expiresAt is today
+        const expiresAt = localStorage.getItem('expiresAt');
+        if (expiresAt) {
+            const expiresAtDate = new Date(parseInt(expiresAt));
+            const today = new Date();
+            if (expiresAtDate < today) {
+                // Clear events and auth state on login page load
+                dispatch(logout());
+            } else {
+                navigate('/');
+            }
+        }
+    }, [dispatch]);
 
     const cleanSubject = (subject: string) => {
-        return subject.replace(/\(BSD23 2°\)\s*/, '');
+        return subject.replace(/\(.*?\)\s*/, '');
     };
 
     const login = async (): Promise<void> => {
@@ -63,8 +70,8 @@ const Demo = () => {
                     "data": {
                         user: email,
                         pwd: hashedPassword, // Ensure secure handling on the server side
-                        fromDate: '01/09/2024',
-                        toDate: '01/09/2025',
+                        fromDate: new Date(new Date().setFullYear(new Date().getFullYear() - 1)).toLocaleDateString('it-IT'),
+                        toDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toLocaleDateString('it-IT'),
                     }
                 },
                 {
@@ -88,6 +95,7 @@ const Demo = () => {
             // Since the response doesn't contain user info or token,
             // we'll consider the login successful if the request succeeds
             // and dispatch `loginSuccess` to update the auth state
+            localStorage.setItem('expiresAt', String(Date.now() + 1000 * 60 * 60 * 24 * 30));
             dispatch(loginSuccess());
 
             // Map response data to Event structure

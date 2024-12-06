@@ -22,6 +22,9 @@ const authSlice = createSlice({
         logout(state) {
             state.isAuthenticated = false;
             localStorage.setItem('isAuthenticated', JSON.stringify(false));
+            localStorage.removeItem('email');
+            localStorage.removeItem('hashedPassword');
+            localStorage.removeItem('expiresAt');
         },
     },
 });
