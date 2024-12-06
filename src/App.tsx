@@ -22,7 +22,7 @@ const customStyles = {
 };
 
 const formatDate = (date: Date) => {
-  return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+  return `${date.getHours()}:${date.getMinutes()}`;
 };
 
 const cleanSubject = (subject: string) => {
@@ -33,8 +33,8 @@ const App: FC = () => {
 
   const events = useSelector((state: RootState) => state.events.events);
 
+
   const dispatch = useDispatch<AppDispatch>();
-  // const navigate = useNavigate();
   const [selectedEvent, setSelectedEvent] = useState<any>(null);
 
   useEffect(() => {
@@ -63,22 +63,25 @@ const App: FC = () => {
 
         // Map response data to Event structure
         const eventsData = Array.isArray(response.data) ? response.data : [response.data];
-        console.log(eventsData[0].events[0]);
-        const formattedEvents = eventsData[0].events.map((element: any) => ({
-          title: cleanSubject(element.Subject), // Cleaned title
-          start: new Date(element.StartTime), // Changed startTime to start
-          end: new Date(element.EndTime), // Changed endTime to end
-          color: element.Colore,
-          module: element.Modulo,
-          moduleCode: element.ModuloCodice,
-          course: element.Corso,
-          courseCode: element.CorsoCodice,
-          year: element.Anno,
-          classroom: element.Aula,
-          teacherFirstName: element.NomeDocente,
-          teacherLastName: element.CognomeDocente,
+        const formattedEvents = eventsData.flatMap((data: any) => data.events.map((element: any) => {
+          return {
+            title: cleanSubject(element.Subject), // Cleaned title
+            start: new Date(element.StartTime), // Changed startTime to start
+            end: new Date(element.EndTime), // Changed endTime to end
+            color: element.Colore,
+            module: element.Modulo,
+            moduleCode: element.ModuloCodice,
+            course: element.Corso,
+            courseCode: element.CorsoCodice,
+            year: element.Anno,
+            classroom: element.Aula,
+            teacherFirstName: element.NomeDocente,
+            teacherLastName: element.CognomeDocente,
+          };
         }));
 
+
+        dispatch(setEvents([]));
         // Dispatch events to the Redux store
         dispatch(setEvents(formattedEvents));
       } catch (error) {
@@ -88,13 +91,6 @@ const App: FC = () => {
 
     fetchEvents();
   }, [dispatch]);
-
-  // const handleLogout = () => {
-  //   dispatch(logout());
-  //   dispatch(clearEvents());
-  //   toast.success('Logged out successfully');
-  //   navigate('/login');
-  // };
 
   const handleEventClick = (event: any) => {
     setSelectedEvent(event);

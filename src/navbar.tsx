@@ -1,7 +1,7 @@
 import React from "react";
 import {
     Navbar,
-    MobileNav,
+    Collapse,
     Typography,
     Button,
     IconButton,
@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from './redux/store'
 import { clearEvents } from './redux/eventSlice'
+import { clearMarks } from "./redux/markSlice";
 import { logout } from './redux/authSlice'
 import { toast } from 'react-toastify'
 
@@ -28,6 +29,7 @@ export function NavbarDefault() {
 
     const handleLogout = () => {
         dispatch(logout());
+        dispatch(clearMarks());
         dispatch(clearEvents());
         toast.success('Logged out successfully');
         navigate('/login');
@@ -162,25 +164,19 @@ export function NavbarDefault() {
                     )}
                 </IconButton>
             </div>
-            <MobileNav open={openNav}>
+            <Collapse open={openNav}>
                 <div className="container mx-auto">
                     {navList}
                     <div className="flex items-center gap-x-1">
-                        <Button fullWidth variant="text" size="sm" className=""
-                            placeholder=""
-                            onPointerEnterCapture={() => { }}
-                            onPointerLeaveCapture={() => { }}>
-                            <span>Log In</span>
-                        </Button>
                         <Button fullWidth variant="gradient" size="sm" className=""
                             placeholder=""
                             onPointerEnterCapture={() => { }}
                             onPointerLeaveCapture={() => { }}>
-                            <span>Sign in</span>
+                            <span>Logout</span>
                         </Button>
                     </div>
                 </div>
-            </MobileNav>
+            </Collapse>
         </Navbar>
     );
 }
