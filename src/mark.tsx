@@ -15,18 +15,17 @@ import { SortableTable } from './table';
 export function UnderlineTabs() {
     const marks = useSelector((state: RootState) => state.marks.marks);
     const dispatch = useDispatch<AppDispatch>();
-    console.log(marks);
     const [activeTab, setActiveTab] = React.useState("1anno");
     const data = [
         {
             label: "1° Anno",
             value: "1anno",
-            markTab: Array.isArray(marks[0]) ? marks[0] : [],
+            markTab: Array.isArray(marks[0]?.PRI) ? marks[0].PRI : [],
         },
         {
             label: "2° Anno",
             value: "2anno",
-            markTab: Array.isArray(marks[0]) ? marks[0] : [],
+            markTab: Array.isArray(marks[1]?.SEC) ? marks[1].SEC : [],
         },
     ];
 
@@ -104,14 +103,16 @@ export function UnderlineTabs() {
                     onPointerEnterCapture={() => { }}
                     onPointerLeaveCapture={() => { }}
                 >
-                    {data.map(({ value, markTab }) => (
-                        <TabPanel key={value} value={value}>
-                            <div>
-                                {/* <pre>{JSON.stringify(markTab, null, 2)}</pre> */}
-                                <SortableTable marks={markTab} />
-                            </div>
-                        </TabPanel>
-                    ))}
+                    {data.map(({ value, markTab }) => {
+                        return (
+                            <TabPanel key={value} value={value}>
+                                <div>
+                                    {/* <pre>{JSON.stringify(markTab, null, 2)}</pre> */}
+                                    <SortableTable marks={markTab} />
+                                </div>
+                            </TabPanel>
+                        );
+                    })}
                 </TabsBody>
             </Tabs>
         </div>

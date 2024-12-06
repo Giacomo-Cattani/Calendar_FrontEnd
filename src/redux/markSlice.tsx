@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Pri } from '../type'
+import { Marks } from '../type'
 
 interface MarkState {
-    marks: Pri[];
+    marks: Marks[];
 }
 
 const initialState: MarkState = {
@@ -13,10 +13,10 @@ const markSlice = createSlice({
     name: 'marks',
     initialState,
     reducers: {
-        setMarks(state, action: PayloadAction<Pri[]>) {
+        setMarks(state, action: PayloadAction<Marks[]>) {
             state.marks = action.payload;
         },
-        addMarks(state, action: PayloadAction<Pri>) {
+        addMarks(state, action: PayloadAction<Marks>) {
             state.marks.push(action.payload);
         },
         clearMarks(state) {

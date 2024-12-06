@@ -1,75 +1,32 @@
 import {
     Card,
-    Typography,
-    Chip
+    Typography
 } from "@material-tailwind/react";
-import { Marks, Pri } from './type'
+import { Pri } from './type';
 
 const TABLE_HEAD = ["Codice", "Modulo", "Voto"];
 
-const TABLE_ROWS = [
-    {
-        img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-3.jpg",
-        name: "John Michael",
-        email: "john@creative-tim.com",
-        job: "Manager",
-        org: "Organization",
-        online: true,
-        date: "23/04/18",
-    },
-    {
-        img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-2.jpg",
-        name: "Alexa Liras",
-        email: "alexa@creative-tim.com",
-        job: "Programator",
-        org: "Developer",
-        online: false,
-        date: "23/04/18",
-    },
-    {
-        img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-1.jpg",
-        name: "Laurent Perrier",
-        email: "laurent@creative-tim.com",
-        job: "Executive",
-        org: "Projects",
-        online: false,
-        date: "19/09/17",
-    },
-    {
-        img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-4.jpg",
-        name: "Michael Levi",
-        email: "michael@creative-tim.com",
-        job: "Programator",
-        org: "Developer",
-        online: true,
-        date: "24/12/08",
-    },
-    {
-        img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-5.jpg",
-        name: "Richard Gran",
-        email: "richard@creative-tim.com",
-        job: "Manager",
-        org: "Executive",
-        online: false,
-        date: "04/10/21",
-    },
-];
+export function SortableTable({ marks }: { marks: Pri[] }) {
+    // Define a skeleton row count
+    const skeletonRows = Array.from({ length: 20 }, (_, index) => index);
 
-export function SortableTable({ marks }: { marks: Marks[] }) {
     return (
         <Card className="h-full w-full" placeholder="" onPointerEnterCapture={() => { }} onPointerLeaveCapture={() => { }}>
             <table className="w-full min-w-max table-auto text-left">
                 <thead>
                     <tr>
-                        {TABLE_HEAD.map((head, index) => (
+                        {TABLE_HEAD.map((head) => (
                             <th
                                 key={head}
-                                className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50 text-center"
+                                className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50 text-left w-1/3"
                             >
-                                <Typography placeholder="" onPointerEnterCapture={() => { }} onPointerLeaveCapture={() => { }}
+                                <Typography
+                                    placeholder=""
+                                    onPointerEnterCapture={() => { }}
+                                    onPointerLeaveCapture={() => { }}
                                     variant="small"
                                     color="blue-gray"
-                                    className="flex items-center justify-center gap-2 font-normal leading-none opacity-70"
+                                    className="flex items-left justify-left gap-2 font-black leading-none"
                                 >
                                     {head}{" "}
                                 </Typography>
@@ -78,28 +35,64 @@ export function SortableTable({ marks }: { marks: Marks[] }) {
                     </tr>
                 </thead>
                 <tbody>
-                    {marks.map((mark, index) => {
-                        const tempMark = mark.PRI ? mark.PRI : mark.SEC;
-                        return (
+                    {(!marks || marks.length === 0) ? (
+                        // Render skeleton rows when marks are undefined or empty
+                        skeletonRows.map((_, index) => (
                             <tr key={index} className="even:bg-blue-gray-50/50">
-                                <td className="p-4 text-center">
-                                    <Typography variant="small" color="blue-gray" className="font-normal" placeholder="" onPointerEnterCapture={() => { }} onPointerLeaveCapture={() => { }}>
-                                        {tempMark ? tempMark. : 'N/A'}
+                                <td className="p-3 text-left">
+                                    <div className="h-6 w-full bg-gray-500 rounded animate-pulse"></div>
+                                </td>
+                                <td className="p-3 text-left">
+                                    <div className="h-6 w-full bg-gray-500 rounded animate-pulse"></div>
+                                </td>
+                                <td className="p-3 text-left">
+                                    <div className="h-6 w-full bg-gray-500 rounded animate-pulse"></div>
+                                </td>
+                            </tr>
+                        ))
+                    ) : (
+                        // Render actual data when marks are available
+                        marks.map((mark, index) => (
+                            <tr key={index} className="even:bg-blue-gray-50/50">
+                                <td className="p-3 text-left">
+                                    <Typography
+                                        variant="small"
+                                        color="blue-gray"
+                                        className="font-semibold"
+                                        placeholder=""
+                                        onPointerEnterCapture={() => { }}
+                                        onPointerLeaveCapture={() => { }}
+                                    >
+                                        {mark.CodiceModulo}
                                     </Typography>
                                 </td>
-                                <td className="p-4 text-center">
-                                    <Typography variant="small" color="blue-gray" className="font-normal" placeholder="" onPointerEnterCapture={() => { }} onPointerLeaveCapture={() => { }}>
-                                        {tempMark.modulo}
+                                <td className="p-3 text-left">
+                                    <Typography
+                                        variant="small"
+                                        color="blue-gray"
+                                        className="font-semibold"
+                                        placeholder=""
+                                        onPointerEnterCapture={() => { }}
+                                        onPointerLeaveCapture={() => { }}
+                                    >
+                                        {mark.TitoloModulo}
                                     </Typography>
                                 </td>
-                                <td className="p-4 text-center">
-                                    <Typography variant="small" color="blue-gray" className="font-normal" placeholder="" onPointerEnterCapture={() => { }} onPointerLeaveCapture={() => { }}>
-                                        {mark.voto}
+                                <td className="p-3 text-left">
+                                    <Typography
+                                        variant="small"
+                                        color="blue-gray"
+                                        className={mark.voto ? "font-semibold" : "italic"}
+                                        placeholder=""
+                                        onPointerEnterCapture={() => { }}
+                                        onPointerLeaveCapture={() => { }}
+                                    >
+                                        {mark.voto ? `${mark.voto} / 30` : "Nessuna valutazione"}
                                     </Typography>
                                 </td>
                             </tr>
-                        )
-                    })}
+                        ))
+                    )}
                 </tbody>
             </table>
         </Card>
