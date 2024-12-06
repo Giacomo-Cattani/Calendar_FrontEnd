@@ -9,8 +9,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from './redux/store'
 import { setEvents } from './redux/eventSlice'
 import axios from 'axios'
+import { CalendarComponent } from './calendar'
 
-moment.locale('en-GB')
+moment.locale('it-IT')
 
 const customStyles = {
   content: {
@@ -103,7 +104,8 @@ const App: FC = () => {
   return (
     <>
       {/* <button onClick={handleLogout}>Logout</button> */}
-      <Calendar
+      <CalendarComponent />
+      {/* <Calendar
         localizer={momentLocalizer(moment)}
         defaultView={window.innerWidth < 768 ? 'day' : 'week'}
         min={new Date(0, 0, 0, 9, 0, 0)}
@@ -118,7 +120,7 @@ const App: FC = () => {
         }}
         style={{ height: '90vh', paddingTop: '1rem' }}
         onSelectEvent={handleEventClick}
-      />
+      /> */}
       {selectedEvent && (
         <Modal
           isOpen={!!selectedEvent}
