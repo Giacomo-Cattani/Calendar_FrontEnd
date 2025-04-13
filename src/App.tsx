@@ -52,8 +52,8 @@ const App: FC = () => {
             "data": {
               user: email,
               pwd: hashedPassword, // Ensure secure handling on the server side
-              fromDate: '01/09/2024',
-              toDate: '01/09/2025',
+              fromDate: moment().subtract(1, 'year').format('DD/MM/YYYY'),
+              toDate: moment().add(1, 'year').format('DD/MM/YYYY'),
             }
           },
           {
