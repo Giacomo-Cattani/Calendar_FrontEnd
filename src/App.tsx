@@ -1,6 +1,5 @@
 import { FC, useEffect, useState } from 'react'
 import { Calendar, momentLocalizer } from 'react-big-calendar'
-import moment from 'moment'
 import Modal from 'react-modal'
 
 import 'react-big-calendar/lib/addons/dragAndDrop/styles.css'
@@ -10,11 +9,24 @@ import { AppDispatch, RootState } from './redux/store'
 import { setEvents } from './redux/eventSlice'
 import axios from 'axios'
 
-moment.locale('en-GB')
+import moment from 'moment'
+import 'moment/locale/it'
+moment.locale('it-IT')
+
+moment.updateLocale('it-IT',{
+  week: {
+    dow: 1, // Set Monday as the first day of the week
+    doy: 1, // Set the first week of the year to start on the first Monday
+  },
+})
+const localizer = momentLocalizer(moment)
 
 const customStyles = {
   content: {
     zIndex: 1000,
+    width: '50%',
+    height: '50%',
+    margin: 'auto',
   },
   overlay: {
     zIndex: 1000,
@@ -104,7 +116,8 @@ const App: FC = () => {
     <>
       {/* <button onClick={handleLogout}>Logout</button> */}
       <Calendar
-        localizer={momentLocalizer(moment)}
+        culture='it-IT'
+        localizer={localizer}
         defaultView={window.innerWidth < 768 ? 'day' : 'week'}
         min={new Date(0, 0, 0, 9, 0, 0)}
         max={new Date(0, 0, 0, 19, 0, 0)}
